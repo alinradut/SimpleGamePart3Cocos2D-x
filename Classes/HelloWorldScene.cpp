@@ -84,6 +84,7 @@ bool HelloWorld::init()
 	_targets = new CCMutableArray<CCSprite*>;
 	_projectiles = new CCMutableArray<CCSprite*>;
 	
+	_nextProjectile = NULL;
 	
 	_player = CCSprite::spriteWithFile("Player2.jpg");
 	_player->retain();
@@ -162,55 +163,75 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 #endif
 }
 
+void HelloWorld::finishShoot()
+{
+    // Ok to add now - we've finished rotation!
+	this->addChild(_nextProjectile);
+	_projectiles->addObject(_nextProjectile);
+	
+	// Release
+	_nextProjectile->release();
+	_nextProjectile = NULL;
+}
+
 void HelloWorld::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
+	if (_nextProjectile != NULL)
+	{
+		return;
+	}
+	
 	CCTouch *touch = (CCTouch *)pTouches->anyObject();
 	CCPoint location = touch->locationInView(touch->view());
 	location = CCDirector::sharedDirector()->convertToGL(location);
 	
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	CCSprite *projectile = CCSprite::spriteWithFile("Projectile2.jpg", CCRectMake(0, 0, 20, 20));
-	projectile->setPosition(ccp(20, winSize.height/2));
+	_nextProjectile = CCSprite::spriteWithFile("Projectile2.jpg", CCRectMake(0, 0, 20, 20));
+	_nextProjectile->retain();
+	_nextProjectile->setPosition(ccp(20, winSize.height/2));
 	
 	// Determine offset of location to projectile
-	int offX = location.x - projectile->getPosition().x;
-	int offY = location.y - projectile->getPosition().y;
+	int offX = location.x - _nextProjectile->getPosition().x;
+	int offY = location.y - _nextProjectile->getPosition().y;
 	
 	// Bail out if we are shooting down or backwards
 	if (offX <= 0) return;
-	
-	// Ok to add now - we've double checked position
-	this->addChild(projectile);
+
+	// Play a sound!
+	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.caf");
 	
 	// Determine where we wish to shoot the projectile to
-	int realX = winSize.width + (projectile->getContentSize().width/2);
+	int realX = winSize.width + (_nextProjectile->getContentSize().width/2);
 	float ratio = (float) offY / (float) offX;
-	int realY = (realX * ratio) + projectile->getPosition().y;
+	int realY = (realX * ratio) + _nextProjectile->getPosition().y;
 	CCPoint realDest = ccp(realX, realY);
 	
 	// Determine the length of how far we're shooting
-	int offRealX = realX - projectile->getPosition().x;
-	int offRealY = realY - projectile->getPosition().y;
+	int offRealX = realX - _nextProjectile->getPosition().x;
+	int offRealY = realY - _nextProjectile->getPosition().y;
 	float length = sqrtf((offRealX*offRealX)+(offRealY*offRealY));
 	float velocity = 480/1; // 480pixels/1sec
 	float realMoveDuration = length/velocity;
-	
-	projectile->setTag(2);
-	_projectiles->addObject(projectile);
 	
 	// Determine angle to face
 	float angleRadians = atanf((float)offRealY / (float)offRealX);
 	float angleDegrees = CC_RADIANS_TO_DEGREES(angleRadians);
 	float cocosAngle = -1 * angleDegrees;
 	_player->setRotation(cocosAngle);
+	float rotateSpeed = 0.5 / M_PI; // Would take 0.5 seconds to rotate 0.5 radians, or half a circle
+    float rotateDuration = fabs(angleRadians * rotateSpeed);    
+	
+	_player->runAction(CCSequence::actions(CCRotateTo::actionWithDuration(rotateDuration, cocosAngle),
+										   CCCallFunc::actionWithTarget(this, callfunc_selector(HelloWorld::finishShoot)),
+										   NULL));
 	
 	// Move projectile to actual endpoint
-	projectile->runAction(CCSequence::actions(CCMoveTo::actionWithDuration(realMoveDuration, realDest), 
-											  CCCallFuncN::actionWithTarget(this, callfuncN_selector(HelloWorld::spriteMoveFinished)),
-											  NULL));
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.caf");
-	
+	_nextProjectile->runAction(CCSequence::actions(CCMoveTo::actionWithDuration(realMoveDuration, realDest), 
+												   CCCallFuncN::actionWithTarget(this, callfuncN_selector(HelloWorld::spriteMoveFinished)),
+												   NULL));
+	// Add to projectiles array
+	_nextProjectile->setTag(2);
 }
 
 void HelloWorld::update(cocos2d::ccTime dt)

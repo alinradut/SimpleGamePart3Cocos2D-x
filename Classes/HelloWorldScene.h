@@ -22,6 +22,9 @@ public:
 	
 	void update(cocos2d::ccTime dt);
 	
+	void finishShoot();
+
+	
 	// a selector callback
 	virtual void menuCloseCallback(CCObject* pSender);
 
@@ -36,6 +39,7 @@ private:
 	
 	int _projectilesDestroyed;
 	cocos2d::CCSprite *_player;
+	cocos2d::CCSprite *_nextProjectile;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
