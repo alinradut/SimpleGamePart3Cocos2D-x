@@ -10,6 +10,7 @@
 		3B2B4FBC13EB493F00A6669C /* Target.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FB913EB493F00A6669C /* Target.png */; };
 		3B2B4FBD13EB493F00A6669C /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FBA13EB493F00A6669C /* Projectile.png */; };
 		3B2B4FBE13EB493F00A6669C /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FBB13EB493F00A6669C /* Player.png */; };
+		3B9B52B213F5C81A00CBAF80 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B52B113F5C81A00CBAF80 /* Monster.cpp */; };
 		3BBBE59213F5B2FB0000A60B /* Projectile2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3BBBE59013F5B2FB0000A60B /* Projectile2.jpg */; };
 		3BBBE59313F5B2FB0000A60B /* Player2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3BBBE59113F5B2FB0000A60B /* Player2.jpg */; };
 		3BC8970113F3230900C91954 /* background-music-aac.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3BC896FF13F3230900C91954 /* background-music-aac.caf */; };
@@ -301,6 +302,8 @@
 		3B2B4FB913EB493F00A6669C /* Target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target.png; sourceTree = "<group>"; };
 		3B2B4FBA13EB493F00A6669C /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3B2B4FBB13EB493F00A6669C /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
+		3B9B52B013F5C81A00CBAF80 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
+		3B9B52B113F5C81A00CBAF80 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		3BBBE59013F5B2FB0000A60B /* Projectile2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Projectile2.jpg; sourceTree = "<group>"; };
 		3BBBE59113F5B2FB0000A60B /* Player2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Player2.jpg; sourceTree = "<group>"; };
 		3BC896FF13F3230900C91954 /* background-music-aac.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "background-music-aac.caf"; sourceTree = "<group>"; };
@@ -665,10 +668,12 @@
 			children = (
 				BF83638A132875D800F3C033 /* AppDelegate.cpp */,
 				BF83638B132875D800F3C033 /* AppDelegate.h */,
-				BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */,
 				BF83631C13286EF300F3C033 /* HelloWorldScene.h */,
+				BF83631B13286EF300F3C033 /* HelloWorldScene.cpp */,
 				3BC8971113F324B400C91954 /* GameOverScene.h */,
 				3BC8971213F324B400C91954 /* GameOverScene.cpp */,
+				3B9B52B013F5C81A00CBAF80 /* Monster.h */,
+				3B9B52B113F5C81A00CBAF80 /* Monster.cpp */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1400,6 +1405,7 @@
 				D408234E132F3DD900F44E75 /* main.m in Sources */,
 				D4082351132F3DE800F44E75 /* SimpleGameAppController.mm in Sources */,
 				3BC8971313F324B400C91954 /* GameOverScene.cpp in Sources */,
+				3B9B52B213F5C81A00CBAF80 /* Monster.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
