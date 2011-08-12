@@ -1,2 +1,4 @@
 .DS_Store
 build
+SimpleGame.xcodeproj/*.pbxuser
+SimpleGame.xcodeproj/*.mode1v3

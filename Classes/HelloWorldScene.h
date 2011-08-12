@@ -35,6 +35,7 @@ private:
 	cocos2d::CCMutableArray<cocos2d::CCSprite*> *_projectiles;
 	
 	int _projectilesDestroyed;
+	cocos2d::CCSprite *_player;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

@@ -18,6 +18,11 @@ HelloWorld::~HelloWorld()
 		_projectiles = NULL;
 	}
 	
+	if (_player)
+	{
+		_player->release();
+		_player = NULL;
+	}
 	// cpp don't need to call super dealloc
 	// virtual destructor will do this
 }
@@ -64,13 +69,13 @@ bool HelloWorld::init()
 
 	CCSize size = CCDirector::sharedDirector()->getWinSize();
 
-	CCSprite* player = CCSprite::spriteWithFile("Player.png", CCRectMake(0, 0, 27, 40));
+	//CCSprite* player = CCSprite::spriteWithFile("Player2.jpg", CCRectMake(0, 0, 27, 40));
 
 	// position the sprite on the center of the screen
-	player->setPosition( ccp(player->getContentSize().width/2, size.height/2) );
+	//player->setPosition( ccp(player->getContentSize().width/2, size.height/2) );
 
 	// add the sprite as a child to this layer
-	this->addChild(player, 0);
+	//this->addChild(player, 0);
 	
     this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
    
@@ -78,6 +83,12 @@ bool HelloWorld::init()
 	
 	_targets = new CCMutableArray<CCSprite*>;
 	_projectiles = new CCMutableArray<CCSprite*>;
+	
+	
+	_player = CCSprite::spriteWithFile("Player2.jpg");
+	_player->retain();
+	_player->setPosition(CCPointMake(_player->getContentSize().width/2, size.height/2));
+	this->addChild(_player);
 	
 	this->schedule(schedule_selector(HelloWorld::update));
 	CCLOG("Loading music");
@@ -159,7 +170,7 @@ void HelloWorld::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 	
 	// Set up initial location of projectile
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-	CCSprite *projectile = CCSprite::spriteWithFile("Projectile.png", CCRectMake(0, 0, 20, 20));
+	CCSprite *projectile = CCSprite::spriteWithFile("Projectile2.jpg", CCRectMake(0, 0, 20, 20));
 	projectile->setPosition(ccp(20, winSize.height/2));
 	
 	// Determine offset of location to projectile
@@ -187,6 +198,12 @@ void HelloWorld::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 	
 	projectile->setTag(2);
 	_projectiles->addObject(projectile);
+	
+	// Determine angle to face
+	float angleRadians = atanf((float)offRealY / (float)offRealX);
+	float angleDegrees = CC_RADIANS_TO_DEGREES(angleRadians);
+	float cocosAngle = -1 * angleDegrees;
+	_player->setRotation(cocosAngle);
 	
 	// Move projectile to actual endpoint
 	projectile->runAction(CCSequence::actions(CCMoveTo::actionWithDuration(realMoveDuration, realDest), 
