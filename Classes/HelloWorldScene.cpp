@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "GameOverScene.h"
+#include "Monster.h"
 
 USING_NS_CC;
 
@@ -85,6 +86,7 @@ bool HelloWorld::init()
 	_projectiles = new CCMutableArray<CCSprite*>;
 	
 	_nextProjectile = NULL;
+	_projectilesDestroyed = 0;
 	
 	_player = CCSprite::spriteWithFile("Player2.jpg");
 	_player->retain();
@@ -93,7 +95,7 @@ bool HelloWorld::init()
 	
 	this->schedule(schedule_selector(HelloWorld::update));
 	CCLOG("Loading music");
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music-aac.caf");
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music-aac.caf");
 	
 	return true;
 }
@@ -105,7 +107,14 @@ void HelloWorld::gameLogic(cocos2d::ccTime dt)
 
 void HelloWorld::addTarget()
 {
-	CCSprite *target = CCSprite::spriteWithFile("Target.png", CCRectMake(0, 0, 27, 40));
+	Monster *target = NULL;
+	if ((arc4random() % 2) == 0) 
+	{
+		target = WeakAndFastMonster::monster();
+	} else 
+	{
+		target = StrongAndSlowMonster::monster();
+	}
 	
     // Determine where to spawn the target along the Y axis
 	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
@@ -120,8 +129,8 @@ void HelloWorld::addTarget()
 	this->addChild(target);
 	
 	// Determine speed of the target
-	int minDuration = 2.0;
-	int maxDuration = 4.0;
+	int minDuration = target->getMinMoveDuration();
+	int maxDuration = target->getMaxMoveDuration();
 	int rangeDuration = maxDuration - minDuration;
 	int actualDuration = (arc4random() % rangeDuration) + minDuration;
 
@@ -199,7 +208,7 @@ void HelloWorld::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 	if (offX <= 0) return;
 
 	// Play a sound!
-	//CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.caf");
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.caf");
 	
 	// Determine where we wish to shoot the projectile to
 	int realX = winSize.width + (_nextProjectile->getContentSize().width/2);
@@ -248,6 +257,8 @@ void HelloWorld::update(cocos2d::ccTime dt)
 										   projectile->getPosition().y - (projectile->getContentSize().height/2), 
 										   projectile->getContentSize().width, 
 										   projectile->getContentSize().height);
+		bool monsterHit = false;
+		
 		CCMutableArray<cocos2d::CCSprite*> *targetsToDelete = new CCMutableArray<cocos2d::CCSprite*>;
 		for (jt = _targets->begin(); jt != _targets->end(); jt++)
 		{
@@ -259,7 +270,19 @@ void HelloWorld::update(cocos2d::ccTime dt)
 										   target->getContentSize().height);
 			
 			if (CCRect::CCRectIntersectsRect(projectileRect, targetRect)) {
-				targetsToDelete->addObject(target);
+				monsterHit = true;
+				Monster *monster = (Monster *)target;
+				monster->setCurHp(monster->getCurHp()-1);
+				CCLOG("Decreasing HP for monster %@ to %d", monster, monster->getCurHp());
+				if (monster->getCurHp() <= 0)
+				{
+					targetsToDelete->addObject(target);
+				}
+				else {
+					CCLOG("derp");
+				}
+
+				break;
 			}
 		}
 		
@@ -277,9 +300,9 @@ void HelloWorld::update(cocos2d::ccTime dt)
 			}
 		}
 		
-		if (targetsToDelete->count())
-		{
+		if (monsterHit) {
 			projectilesToDelete->addObject(*it);
+			CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("explosion.caf");
 		}
 		
 		targetsToDelete->release();

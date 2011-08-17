@@ -10,6 +10,8 @@
 		3B2B4FBC13EB493F00A6669C /* Target.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FB913EB493F00A6669C /* Target.png */; };
 		3B2B4FBD13EB493F00A6669C /* Projectile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FBA13EB493F00A6669C /* Projectile.png */; };
 		3B2B4FBE13EB493F00A6669C /* Player.png in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B4FBB13EB493F00A6669C /* Player.png */; };
+		3B45D67A13FBD9BC0079F383 /* Target2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3B45D67913FBD9BC0079F383 /* Target2.jpg */; };
+		3B45D74B13FBE2590079F383 /* explosion.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3B45D74A13FBE2590079F383 /* explosion.caf */; };
 		3B9B52B213F5C81A00CBAF80 /* Monster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B9B52B113F5C81A00CBAF80 /* Monster.cpp */; };
 		3BBBE59213F5B2FB0000A60B /* Projectile2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3BBBE59013F5B2FB0000A60B /* Projectile2.jpg */; };
 		3BBBE59313F5B2FB0000A60B /* Player2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3BBBE59113F5B2FB0000A60B /* Player2.jpg */; };
@@ -302,6 +304,8 @@
 		3B2B4FB913EB493F00A6669C /* Target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Target.png; sourceTree = "<group>"; };
 		3B2B4FBA13EB493F00A6669C /* Projectile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Projectile.png; sourceTree = "<group>"; };
 		3B2B4FBB13EB493F00A6669C /* Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Player.png; sourceTree = "<group>"; };
+		3B45D67913FBD9BC0079F383 /* Target2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Target2.jpg; sourceTree = "<group>"; };
+		3B45D74A13FBE2590079F383 /* explosion.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = explosion.caf; sourceTree = "<group>"; };
 		3B9B52B013F5C81A00CBAF80 /* Monster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monster.h; sourceTree = "<group>"; };
 		3B9B52B113F5C81A00CBAF80 /* Monster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Monster.cpp; sourceTree = "<group>"; };
 		3BBBE59013F5B2FB0000A60B /* Projectile2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Projectile2.jpg; sourceTree = "<group>"; };
@@ -691,6 +695,7 @@
 			isa = PBXGroup;
 			children = (
 				3BC896FF13F3230900C91954 /* background-music-aac.caf */,
+				3B45D74A13FBE2590079F383 /* explosion.caf */,
 				3BC8970013F3230900C91954 /* pew-pew-lei.caf */,
 				3B2B4FB913EB493F00A6669C /* Target.png */,
 				3B2B4FBA13EB493F00A6669C /* Projectile.png */,
@@ -707,6 +712,7 @@
 				BF1915C312E04F70007DCFF1 /* Icon@2x.png */,
 				3BBBE59013F5B2FB0000A60B /* Projectile2.jpg */,
 				3BBBE59113F5B2FB0000A60B /* Player2.jpg */,
+				3B45D67913FBD9BC0079F383 /* Target2.jpg */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1390,6 +1396,8 @@
 				3BC8970213F3230900C91954 /* pew-pew-lei.caf in Resources */,
 				3BBBE59213F5B2FB0000A60B /* Projectile2.jpg in Resources */,
 				3BBBE59313F5B2FB0000A60B /* Player2.jpg in Resources */,
+				3B45D67A13FBD9BC0079F383 /* Target2.jpg in Resources */,
+				3B45D74B13FBE2590079F383 /* explosion.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

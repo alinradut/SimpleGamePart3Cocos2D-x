@@ -1,9 +1,12 @@
 #include "AppDelegate.h"
 
+#define COCOS2D_DEBUG	1
+
 #include "cocos2d.h"
 #include "HelloWorldScene.h"
 
 USING_NS_CC;
+
 
 AppDelegate::AppDelegate()
 {

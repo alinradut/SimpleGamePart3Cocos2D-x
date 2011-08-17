@@ -1,7 +1,7 @@
 #ifndef _MONSTER_H_
 #define _MONSTER_H_
 
-#import "cocos2d.h"
+#include "cocos2d.h"
 
 class Monster : public cocos2d::CCSprite 
 {
@@ -14,17 +14,48 @@ public:
 	CC_SYNTHESIZE(int, _maxMoveDuration, MaxMoveDuration);
 };
 
-class WeakAndFastMonster : Monster
+class WeakAndFastMonster : public Monster
 {
-	static Monster* monster() {
+public:
+	static WeakAndFastMonster* monster() {
 		
-		WeakAndFastMonster *monster = Monster::spriteWithFile("Target.jpg");
-		monster.hp = 1;
-		monster.minMoveDuration = 3;
-		monster.minMoveDuration = 5;
+		WeakAndFastMonster *monster = NULL;
+		
+		monster = new WeakAndFastMonster();
+		if (monster && monster->initWithFile("Target2.jpg"))
+		{
+			monster->setCurHp(1);
+			monster->setMinMoveDuration(3);
+			monster->setMaxMoveDuration(5);
+		}
+		else {
+			delete monster;
+		}
 		
 		return monster;
-	};
-}
+	};	
+};
+
+class StrongAndSlowMonster : public Monster
+{
+public:
+	static StrongAndSlowMonster* monster() {
+		
+		StrongAndSlowMonster *monster = NULL;
+		
+		monster = new StrongAndSlowMonster();
+		if (monster && monster->initWithFile("Target2.jpg"))
+		{
+			monster->setCurHp(3);
+			monster->setMinMoveDuration(6);
+			monster->setMaxMoveDuration(12);
+		}
+		else {
+			delete monster;
+		}
+		
+		return monster;
+	};	
+};
 
 #endif
